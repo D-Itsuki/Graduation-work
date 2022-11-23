@@ -126,7 +126,6 @@ public class Enemy1Fist : EnemyState<Enemy1Fist>, IDamageble
 
         public override void OnUpdate()
         {
-            Debug.Log(temp);
             temp += Time.deltaTime;
             if (temp > timer)
             {
@@ -155,7 +154,7 @@ public class Enemy1Fist : EnemyState<Enemy1Fist>, IDamageble
 
     public void Damage(float damage)
     {
-        Debug.Log("Damaged : atk " + damage);
+        //Debug.Log("Damaged : atk " + damage);
         if (Hp <= 0)
             return;
 
