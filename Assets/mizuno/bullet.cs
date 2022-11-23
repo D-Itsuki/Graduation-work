@@ -8,7 +8,6 @@ public class bullet : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         var colldmg = collision.gameObject.GetComponent<IDamageble>();
-        Debug.Log("COLL");
         colldmg.Damage(bulletDamege);
         Destroy(this.gameObject);
     }

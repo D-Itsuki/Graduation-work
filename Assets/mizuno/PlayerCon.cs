@@ -4,9 +4,10 @@ using System.Collections;
 public class PlayerCon : MonoBehaviour,IDamageble
 {
     GameManager _gamemaneger;
-    private float Hp = 10; 
+    private float Hp = 10;
     [SerializeField] GameObject bullet;
     [SerializeField] GameObject barrel;
+    [SerializeField] Animator playerAnm;    
     Rigidbody2D rb;
 
     Vector2 ver = Vector2.zero;
@@ -18,7 +19,9 @@ public class PlayerCon : MonoBehaviour,IDamageble
     {
         rb = GetComponent<Rigidbody2D>();
         _gamemaneger = GameObject.Find("GameManager").GetComponent<GameManager>();
+        playerAnm = GetComponent<Animator>();
     }
+
 
     // Update is called once per frame
     void Update()
@@ -45,10 +48,13 @@ public class PlayerCon : MonoBehaviour,IDamageble
         transform.rotation = Quaternion.FromToRotation(Vector2.up, vec);
         vec = Vector2.zero;
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space/*マウス左クリックの予定*/))
         {
             GameObject Bullet = (GameObject)Instantiate(bullet,barrel.transform.position, barrel.transform.rotation);
-            
+        }
+        if (Input.GetKeyDown(KeyCode.KeypadEnter/*マウス左クリックの予定*/))
+        {
+            playerAnm.SetTrigger("is melee");
         }
     }
 
@@ -62,6 +68,7 @@ public class PlayerCon : MonoBehaviour,IDamageble
         if (Hp < 1)
             Dead();
     }
+
     public void Dead()
     {
         Debug.Log("GAMEOVER");
