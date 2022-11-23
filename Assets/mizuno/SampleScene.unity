@@ -234,8 +234,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 879992079}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.1617, z: 0}
-  m_LocalScale: {x: 1, y: 1.4, z: 0.25}
+  m_LocalPosition: {x: -0.05, y: 0.17, z: 0}
+  m_LocalScale: {x: 0.5, y: 1.4, z: 0.25}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 948612316}
@@ -345,6 +345,7 @@ GameObject:
   - component: {fileID: 948612317}
   - component: {fileID: 948612319}
   - component: {fileID: 948612318}
+  - component: {fileID: 948612320}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -435,7 +436,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 5112817554473089615, guid: a49a9ae3d8e1b7142b31afa8e9c4587d, type: 3}
   barrel: {fileID: 2067067105}
-  meleeAttackArea: {fileID: 879992079}
+  playerAnm: {fileID: 0}
 --- !u!50 &948612318
 Rigidbody2D:
   serializedVersion: 4
@@ -483,6 +484,26 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.16, y: 0.16}
   m_EdgeRadius: 0
+--- !u!95 &948612320
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 948612314}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e1564a2e7151aee4894c8e53b746a1f1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &1342783970
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -500,11 +521,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7546330131280256367, guid: ae3c7f7314dbd4349930002a5c9b3cc8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.86
+      value: 3.82
       objectReference: {fileID: 0}
     - target: {fileID: 7546330131280256367, guid: ae3c7f7314dbd4349930002a5c9b3cc8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 2.23
       objectReference: {fileID: 0}
     - target: {fileID: 7546330131280256367, guid: ae3c7f7314dbd4349930002a5c9b3cc8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -546,6 +567,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 948612316}
+    - target: {fileID: 7546330131280256371, guid: ae3c7f7314dbd4349930002a5c9b3cc8, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae3c7f7314dbd4349930002a5c9b3cc8, type: 3}
 --- !u!114 &2007216991 stripped
