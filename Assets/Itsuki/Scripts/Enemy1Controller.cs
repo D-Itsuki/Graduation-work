@@ -59,6 +59,11 @@ public class Enemy1Controller : EnemyState<Enemy1Controller>, IDamageble
         }
     }
 
+    public void Stun()
+    {
+        state.ChangeState((int)States.Stun);
+    }
+
     private class StateIdle : StateBase
     {
         float stateChangeTime = 3; //‰¼
@@ -66,12 +71,12 @@ public class Enemy1Controller : EnemyState<Enemy1Controller>, IDamageble
 
         public override void OnStart()
         {
-            Debug.Log("Idle Started");
+            //Debug.Log("Idle Started");
         }
 
         public override void OnUpdate()
         {
-            Debug.Log("Idle");
+            //Debug.Log("Idle");
             time += Time.deltaTime;
             if (time > stateChangeTime)
             {
@@ -81,7 +86,7 @@ public class Enemy1Controller : EnemyState<Enemy1Controller>, IDamageble
 
         public override void OnEnd()
         {
-            Debug.Log("Idle End");
+            //Debug.Log("Idle End");
         }
     }
 
@@ -94,7 +99,7 @@ public class Enemy1Controller : EnemyState<Enemy1Controller>, IDamageble
 
         public override void OnStart()
         {
-            Debug.Log("Attack1 In");
+            //Debug.Log("Attack1 In");
             Owner.fistM.Attack1();
         }
 
@@ -103,13 +108,13 @@ public class Enemy1Controller : EnemyState<Enemy1Controller>, IDamageble
             time += Time.deltaTime;
             if (time > attackTime && temp == true)
             {
-                Debug.Log("Punch2");
+                //Debug.Log("Punch2");
                 Owner.fistP.Attack1();
                 temp = false;
             }
             if (time > rearGap)
             {
-                Owner.state.ChangeState((int)States.Stun);
+                Owner.state.ChangeState((int)States.Idle);
             }
         }
 
@@ -122,14 +127,22 @@ public class Enemy1Controller : EnemyState<Enemy1Controller>, IDamageble
 
     private class StateStun : StateBase
     {
+        float timer = 5;//‰¼
+        float temp = 0;
+
         public override void OnStart()
         {
-            Debug.Log("Stun in");
+            //Debug.Log("Stun in");
         }
 
         public override void OnUpdate()
         {
             Debug.Log("Stunning");
+            temp += Time.deltaTime;
+            if (timer > temp)
+            {
+                Owner.state.ChangeState((int)States.Idle);
+            }
         }
     }
 }

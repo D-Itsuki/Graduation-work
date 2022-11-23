@@ -8,6 +8,9 @@ public class Enemy1Fist : EnemyState<Enemy1Fist>, IDamageble
     [SerializeField] float Attack1Speed;
     [SerializeField] Rigidbody2D rb;
     [SerializeField] float atk;
+    [SerializeField] Enemy1Controller enemyBody;
+
+    int hpTemp = 0;
 
     [Header("敵本体からのLocalPosition")]
     [SerializeField] Vector2 startPos;
@@ -29,10 +32,12 @@ public class Enemy1Fist : EnemyState<Enemy1Fist>, IDamageble
     // Start is called before the first frame update
     void Start()
     {
+        hpTemp = (int)Hp;
         state = new EnemyState<Enemy1Fist>(this);//各ステートの登録
         state.Add<StateIdle>((int)States.Idle);
         state.Add<StateAttack1>((int)States.Attack1);
         state.Add<StateResetPos>((int)States.RestPos);
+        state.Add<StateStun>((int)States.Stun);
 
         state.OnStart((int)States.Idle);
     }
@@ -48,13 +53,13 @@ public class Enemy1Fist : EnemyState<Enemy1Fist>, IDamageble
         Vector2 vec;
         public override void OnStart()
         {
-            Debug.Log("Idle in");
+            //Debug.Log("Idle in");
             Owner.rb.velocity = Vector2.zero;
         }
 
         public override void OnUpdate()
         {
-            Debug.Log("Idling");
+            //Debug.Log("Idling");
             Owner.player = GameObject.Find("Player").gameObject.transform; //プレイヤー捕捉
             vec = Owner.player.transform.position - Owner.transform.position;
             vec.Normalize();
@@ -85,6 +90,7 @@ public class Enemy1Fist : EnemyState<Enemy1Fist>, IDamageble
         public override void OnStart()
         {
             Debug.Log("ResetPos");
+            elapsedTime = 0;
         }
 
         public override void OnUpdate()
@@ -102,6 +108,33 @@ public class Enemy1Fist : EnemyState<Enemy1Fist>, IDamageble
         public override void OnEnd()
         {
             
+        }
+    }
+
+    private class StateStun : StateBase
+    {
+        float timer = 5;//仮
+        float temp = 0;
+
+        public override void OnStart()
+        {
+            Debug.Log("Stun in");
+            temp = 0;
+        }
+
+        public override void OnUpdate()
+        {
+            Debug.Log(temp);
+            temp += Time.deltaTime;
+            if (temp > timer)
+            {
+                Owner.state.ChangeState((int)States.Idle);
+            }
+        }
+
+        public override void OnEnd()
+        {
+            Owner.Hp = Owner.hpTemp;
         }
     }
 
@@ -132,7 +165,8 @@ public class Enemy1Fist : EnemyState<Enemy1Fist>, IDamageble
 
     public override void Dead()
     {
-        ChangeState((int)States.Stun);
+        enemyBody.Stun();
+        state.ChangeState((int)States.Stun);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
