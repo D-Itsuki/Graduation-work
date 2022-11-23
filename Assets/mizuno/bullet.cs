@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class bullet : MonoBehaviour
 {
     [SerializeField] int  bulletDamege;
     private void OnCollisionEnter2D(Collision2D collision)
     {
         var colldmg = collision.gameObject.GetComponent<IDamageble>();
+        Debug.Log("COLL");
         colldmg.Damage(bulletDamege);
+        Destroy(this.gameObject);
     }
 
     // Start is called before the first frame update
@@ -16,7 +18,7 @@ public class Bullet : MonoBehaviour
     {
         Rigidbody2D rb = transform.GetComponent<Rigidbody2D>();
         rb.velocity = transform.up * 10f;
-        Destroy(gameObject, 2.0f);
+       // Destroy(gameObject, 2.0f);
     }
 
     // Update is called once per frame

@@ -4,14 +4,12 @@ using System.Collections;
 public class PlayerCon : MonoBehaviour,IDamageble
 {
     GameManager _gamemaneger;
-    private float speed = 10F;
     private float Hp = 10; 
-    [SerializeField] public float fireSpeed;
     [SerializeField] GameObject bullet;
     [SerializeField] GameObject barrel;
     Rigidbody2D rb;
 
-    Vector2 vir = Vector2.zero;
+    Vector2 ver = Vector2.zero;
     Vector2 hor = Vector2.zero;
     Vector2 vec = Vector2.zero;
 
@@ -25,23 +23,23 @@ public class PlayerCon : MonoBehaviour,IDamageble
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.A))
+        hor = new Vector2(Input.GetAxis("Horizontal"), 0);
+        hor.Normalize();
+        Debug.Log("Hor" + hor);
+
+        ver = new Vector2(0, Input.GetAxis("Vertical"));
+        ver.Normalize();
+        Debug.Log("ver" + ver);
+
+        vec = hor + ver;
+        vec.Normalize();
+
+        if (hor != Vector2.zero || ver != Vector2.zero)
         {
-            hor = new Vector2(-1,0);
+            transform.rotation = Quaternion.FromToRotation(Vector2.up, vec);
         }
-        if (Input.GetKey(KeyCode.D))
-        {
-            hor = new Vector2(1, 0);
-        }
-        if (Input.GetKey(KeyCode.W))
-        {
-            vir = new Vector2(0, 1);
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            vir = new Vector2(0, -1);
-        }
-        vec = vir + hor;
+        rb.velocity = vec;
+        vec = ver + hor;
         vec.Normalize();
         rb.velocity = vec;
         transform.rotation = Quaternion.FromToRotation(Vector2.up, vec);
@@ -66,6 +64,7 @@ public class PlayerCon : MonoBehaviour,IDamageble
     }
     public void Dead()
     {
+        Debug.Log("GAMEOVER");
         _gamemaneger.GameOver();
     }
 
