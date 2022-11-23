@@ -72,6 +72,7 @@ public class Enemy1Controller : EnemyState<Enemy1Controller>, IDamageble
         public override void OnStart()
         {
             //Debug.Log("Idle Started");
+            time = 0;
         }
 
         public override void OnUpdate()
@@ -95,22 +96,24 @@ public class Enemy1Controller : EnemyState<Enemy1Controller>, IDamageble
         float attackTime = 3; //‰¼
         float time = 0;
         float rearGap = 6; //‰¼
-        bool temp = true;
+        bool isFirst = true;
 
         public override void OnStart()
         {
-            //Debug.Log("Attack1 In");
+            Debug.Log("Attack1 In");
             Owner.fistM.Attack1();
+            time = 0;
+            isFirst = true;
         }
 
         public override void OnUpdate()
         {
             time += Time.deltaTime;
-            if (time > attackTime && temp == true)
+            if (time > attackTime && isFirst == true)
             {
                 //Debug.Log("Punch2");
                 Owner.fistP.Attack1();
-                temp = false;
+                isFirst = false;
             }
             if (time > rearGap)
             {
@@ -133,6 +136,7 @@ public class Enemy1Controller : EnemyState<Enemy1Controller>, IDamageble
         public override void OnStart()
         {
             //Debug.Log("Stun in");
+            temp = 0;
         }
 
         public override void OnUpdate()

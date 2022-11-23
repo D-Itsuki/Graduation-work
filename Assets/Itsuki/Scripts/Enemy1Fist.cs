@@ -72,6 +72,7 @@ public class Enemy1Fist : EnemyState<Enemy1Fist>, IDamageble
         Vector2 vec;
         public override void OnStart()
         {
+            Debug.Log("Attack1");
             Owner.player = GameObject.Find("Player").gameObject.transform; //ÉvÉåÉCÉÑÅ[ïﬂë®
             vec = Owner.player.transform.position - Owner.transform.position;
             vec.Normalize();
@@ -90,6 +91,7 @@ public class Enemy1Fist : EnemyState<Enemy1Fist>, IDamageble
         public override void OnStart()
         {
             Debug.Log("ResetPos");
+            Owner.rb.velocity = Vector2.zero;
             elapsedTime = 0;
         }
 
