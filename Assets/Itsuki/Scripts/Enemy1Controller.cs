@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class Enemy1Controller : EnemyState<Enemy1Controller>
+public class Enemy1Controller : EnemyState<Enemy1Controller>, IDamageble
 {
     private EnemyState<Enemy1Controller> state; // ステートマシン
 
     [SerializeField] private Enemy1Fist fistM; // 魔法弱点の拳
     [SerializeField] private Enemy1Fist fistP; // 物理弱点の拳
+    [SerializeField] UnityEvent gameOverevent;
 
     enum States 
     { 
@@ -38,6 +40,23 @@ public class Enemy1Controller : EnemyState<Enemy1Controller>
     public override void Dead()
     {
         Debug.Log("死んだ");
+        gameOverevent?.Invoke();
+    }
+
+    public void Damage(float damage)
+    {
+        Debug.Log("Damaged : " + damage);
+        if (Hp <= 0)
+        {
+            return;
+        }
+
+        Hp -= damage;
+
+        if (Hp < 1)
+        {
+            Dead();
+        }
     }
 
     private class StateIdle : StateBase

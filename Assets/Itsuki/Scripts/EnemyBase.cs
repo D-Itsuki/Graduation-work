@@ -9,7 +9,7 @@ public abstract class EnemyBase : MonoBehaviour
     {
         set
         {
-            if (value <= 0)
+            if (value < 0)
             {
                 hp = hp;
             }
@@ -22,18 +22,6 @@ public abstract class EnemyBase : MonoBehaviour
         get { return hp; }
     }
 
-    public void Dmage(float atk)
-    {
-        if (hp <= 0)
-            return;
-
-        hp -= atk;
-
-        if (hp < 1)
-        {
-            Dead();
-        }
-    }
 
     /// <summary>
     ///“G–ˆ‚É€‚ñ‚¾‚Ìˆ—‚ğÀ‘•‚·‚é 
